@@ -42,6 +42,7 @@ public class BoardController {
 		bService.regist(vo);
 		// 페이지 이동
 		return "redirect:/board/list";
+//		return "/board/list";
 	}
 	
 	
