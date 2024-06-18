@@ -110,8 +110,45 @@ public class BoardController {
 		
 	}
 	
+	// 게시판 글 수정하기(기존의 글 정보 확인) - GET
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public String modifyGET(@RequestParam("bno") int bno, Model model/*@ModelAttribute*/) throws Exception {
+		logger.debug(" modifyGET() 실행");
+		
+		// 전달정보 bno 저장
+		logger.debug(" bno : " + bno);
+		
+		// 서비스 - DAO 글정보 조회 동작
+		BoardVO resultVO = bService.getBoard(bno);
+		logger.debug("resultVO : {}", resultVO);
+		
+		// /board/modify.jsp
+		
+		model.addAttribute("resultVO", resultVO);
+		
+		
+		return "/board/modify";
+	}
 	
-	
+	// 게시판 글 수정하기(글정보 수정) - POST
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modifyPOST(BoardVO vo, RedirectAttributes rttr) throws Exception{
+		logger.debug("modifyPOST() 실행 ");
+		// 한글처리 인코딩(필터)
+		// 전달정보 저장
+		logger.debug(" 수정할 내용, {}" , vo);
+		
+		// 서비스 - DAO 글 내용을 수정
+		
+		// 상태 정보 전달
+		rttr.addFlashAttribute("msg", "updateOK");
+		
+		bService.updateBoard(vo);
+		
+		// 페이지 이동(listALL.jsp)
+		
+		return "redirect:/board/listALL";
+	}
 	
 	
 	

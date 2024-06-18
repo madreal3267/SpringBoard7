@@ -18,4 +18,7 @@ public interface BoardService {
 	// 특정 bno의 글정보를 가져오기
 	public BoardVO getBoard(int bno) throws Exception;
 	
+	// 특정 bno의 글정보 수정하기
+	public void updateBoard(BoardVO vo) throws Exception;
+	
 }
