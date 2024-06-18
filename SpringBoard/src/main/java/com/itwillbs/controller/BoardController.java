@@ -2,6 +2,7 @@ package com.itwillbs.controller;
 
 import java.util.List;
 
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -150,7 +151,20 @@ public class BoardController {
 		return "redirect:/board/listALL";
 	}
 	
-	
+	// 게시판 글 삭제하기(글정보 삭제) - POST
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String deletePOST(RedirectAttributes rttr,/*@ModelAttribute */ /*@RequestParam("bno") */ int bno) throws Exception {
+		logger.debug("deletePOST() 실행");
+		
+		
+		logger.debug(" 삭제할 글 번호 : {}", bno);
+		bService.deleteBoard(bno);
+		
+		rttr.addFlashAttribute("msg", "deleteOK");
+		
+		logger.debug("삭제 처리 완료	");
+		return "redirect:/board/listALL";
+	}
 	
 
 	

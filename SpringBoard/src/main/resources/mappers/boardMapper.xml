@@ -34,5 +34,9 @@
 	</update>
 	<!-- 특정 글정보를 수정 -->
 
-
+	<!-- 특정 글정보를 삭제 -->
+	<delete id = "deleteBoard">
+		delete from tbl_board where bno=#{bno}
+	</delete>
+	<!-- 특정 글정보를 삭제 -->
 </mapper>
