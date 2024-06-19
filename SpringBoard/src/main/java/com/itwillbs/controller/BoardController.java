@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.service.BoardService;
 
 @Controller
@@ -71,6 +72,24 @@ public class BoardController {
 		
 		// 서비스 -> DB의 정보를 가져오기
 		List<BoardVO> boardList = bService.listALL();
+		logger.debug(" size : "+boardList.size());
+		
+		// 연결된 뷰페이지로 정보 전달
+		model.addAttribute("boardList", boardList);
+		
+		return "/board/list";
+	}
+	
+	@GetMapping(value = "/listPage")
+	public String listPageGET(Criteria cri, Model model) throws Exception{
+		logger.debug(" listPageGET() 실행 ");
+		// 페이징 처리 정보 객체
+//		Criteria cri = new Criteria();
+//		cri.setPage(2);
+//		cri.setPageSize(10);
+		
+		// 서비스 -> DB의 정보를 가져오기(페이징 처리)
+		List<BoardVO> boardList = bService.listPage(cri);
 		logger.debug(" size : "+boardList.size());
 		
 		// 연결된 뷰페이지로 정보 전달
