@@ -6,12 +6,14 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">/board/read_${resultVO.bno}.jsp</h3>
+		<h3 class="box-title">/board/read.jsp</h3>
 	</div>
 	
-		<form role="form"  method="post">
+		<form role="form" action=""  method="post">
 			<%-- <input type="text" name="bno" value="${resultVO.bno }"> --%> 
-			<input type="hidden" name="bno" value="${resultVO.bno }"> 
+			<input type="hidden" name="bno" value="${param.bno }">
+			<input type="hidden" name="page" value="${cri.page }"> 
+			<%-- <input type="hidden" name="pageSize" value="${cri.pageSize }"> --%> 
 		
 		</form>
 
@@ -53,38 +55,34 @@
 		
 		// '수정'버튼 클릭
 		$(".btn-danger").click(function(){
-			
 			//alert("수정 버튼");
 			// 수정페이지로 이동(+bno)
-// 			$("form").attr("action","/board/modify");
+			//$("form").attr("action","/board/modify");
 			$("form[role='form']").attr("action","/board/modify");
 			$("form[role='form']").attr("method","GET");
 			$("form[role='form']").submit();
-			
 		});
 		
-		// '삭제'버튼 클릭
-		$(".btn-warning").click(function(){
-			
-			//alert("삭제 버튼");
-			// 삭제페이지로 이동(+bno)
-// 			$("form").attr("action","/board/delete");
-			$("form[role='form']").attr("action","/board/delete");
-			$("form[role='form']").submit();
-			
+		// '삭제' 버튼 클릭
+		$('.btn-warning').click(function(){
+			$("form[role='form']").attr("action","/board/remove");
+			$("form[role='form']").submit();			
 		});
-		
 		
 		
 		// '리스트'버튼 클릭시 리스트 페이지로 이동
 		$(".btn-primary").click(function(){
 			//alert("클릭!");
-			location.href='/board/listALL';
+			//location.href='/board/listALL';
+			//location.href='/board/listPage?page=${cri.page}&pageSize=${cri.pageSize}';
+			//location.href='/board/listPage?page=${cri.page}';
+			location.href='/board/listPage?page=${param.page}';
 		});
 		
 	});
 </script>
 
+<%-- ${cri } --%>
 
 
 <%@ include file="../include/footer.jsp"%>
