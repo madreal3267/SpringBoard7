@@ -55,39 +55,51 @@ public class BoardDAOImpl implements BoardDAO{
 		return sqlSession.selectOne(NAMESPACE + "getBoard", bno);
 	}
 
+	
 	@Override
 	public void updateBoard(BoardVO vo) throws Exception {
-		logger.debug(" updateBoard(BoardVO vo) 실행");
-		sqlSession.update(NAMESPACE + "updateBoard", vo);
+		logger.debug(" updateBoard(BoardVO vo) 실행 ");
+		sqlSession.update(NAMESPACE + "updateBoard", vo);		
 	}
 
 	@Override
-	public void deleteBoard(int bno) throws Exception {
-		logger.debug(" deleteBoard(BoardVO vo) 실행");
-		sqlSession.delete(NAMESPACE + "deleteBoard", bno);
+	public void deleteBoard(int bno) {
+		logger.debug("deleteBoard(int bno) 실행");
+		sqlSession.delete(NAMESPACE + "deleteBoard",bno);
 	}
 
 	@Override
 	public List<BoardVO> listPage(int page) throws Exception {
-		logger.debug(" listPage(int page) 실행");
+		logger.debug(" listPage(int page) 실행 ");
 		
-		// 페이징 처리정보 계산
-		// 1p (0-9) 2p (10 - 19) 3p (20 - 29)
-		if (page <= 0) {
+		// 페이정 처리정보 계산
+		// 1p (0~9) 2p (10~19) 3p (20~29) ....
+		if(page <= 0) {
 			page = 1;
 		}
+		
 		page = (page - 1) * 10;
 		
-		return sqlSession.selectList(NAMESPACE + "listPage", page);
+		return sqlSession.selectList(NAMESPACE +"listPage",page);
 	}
 
 	@Override
 	public List<BoardVO> listPage(Criteria cri) throws Exception {
-		logger.debug("listPage(Criteria cri) 실행");
+		logger.debug(" listPage(Criteria cri) 실행 ");
 		
-		
-		return sqlSession.selectList(NAMESPACE + "listPage2", cri);
+		return sqlSession.selectList(NAMESPACE + "listPage2",cri);
 	}
+
+	@Override
+	public int getTotalCount() throws Exception {
+		logger.debug(" getTotalCount() 실행 ");
+		return sqlSession.selectOne(NAMESPACE + "totalCount");
+	}
+	
+	
+	
+	
+	
 	
 	
 	

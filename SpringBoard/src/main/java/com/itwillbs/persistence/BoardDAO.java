@@ -16,13 +16,15 @@ public interface BoardDAO {
 	public void updateReadCnt(int bno) throws Exception;
 
 	public BoardVO getBoard(int bno) throws Exception;
-	
+
 	public void updateBoard(BoardVO vo) throws Exception;
-	
-	public void deleteBoard(int bno) throws Exception;
+
+	public void deleteBoard(int bno);
 	
 	public List<BoardVO> listPage(int page) throws Exception;
 	
 	public List<BoardVO> listPage(Criteria cri) throws Exception;
+
+	public int getTotalCount() throws Exception;
 	
 }

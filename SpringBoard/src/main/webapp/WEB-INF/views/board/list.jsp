@@ -10,7 +10,8 @@
 <h1>/board/list.jsp</h1>
 
 <%-- 	${boardList } --%>
-
+<%-- ${pageVO } --%>
+${page }
 전달정보 : ${msg }
 <hr>
 
@@ -34,7 +35,7 @@
 					<tr>
 						<td>${vo.bno }</td>
 						<td>
-							<a href="/board/read?bno=${vo.bno }">${vo.title }</a>
+							<a href="/board/read?bno=${vo.bno }&page=${param.page==null? 1:param.page}">${vo.title }</a>
 						</td>
 						<td>${vo.writer }</td>
 						<td><fmt:formatDate type="both" value="${vo.regdate }" pattern="yyyy-MM-dd (a)HH:mm:ss" /></td>
@@ -70,11 +71,21 @@
 
 	<div class="box-footer clearfix">
 		<ul class="pagination pagination-sm no-margin pull-right">
-			<li><a href="#">«</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">»</a></li>
+			
+			<c:if test="${pageVO.prev }">
+				<li><a href="/board/listPage?page=${pageVO.startPage - 1}">«</a></li>
+			</c:if>
+			
+			<c:forEach var="i"
+						begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+				<li ${pageVO.cri.page == i? 'class="active"':'' } >
+					<a href="/board/listPage?page=${i }">${i }</a>
+				</li>
+			</c:forEach>
+			
+			<c:if test="${pageVO.next && pageVO.endPage > 0 }">
+				<li><a href="/board/listPage?page=${pageVO.endPage + 1 }">»</a></li>
+			</c:if>
 		</ul>
 	</div>
 </div>
@@ -97,15 +108,18 @@
 
 		if (result == "createOk") {
 			//alert(" 글쓰기 완료! 리스트 페이지로 이동! ");
-// 			$("#myModal").modal("show");
+			//$("#myModal").modal("show");
 			Swal.fire("아이티윌 테스트!");
 		}
-		if (result == "updateOK") {
-			Swal.fire("게시판 글 수정완료");
-		}	
-		if (result == "deleteOK") {
-			Swal.fire("게시판 글 삭제완료");
+		if (result == "updateOK" ){
+			Swal.fire("게시판 글 수정완료!");
 		}
+			
+		if(result == "deleteOK"){
+			Swal.fire("게시판 글 삭제 완료!");
+			
+		}
+
 
 	});
 </script>
